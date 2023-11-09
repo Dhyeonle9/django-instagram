@@ -3,7 +3,7 @@ from .models import Post
 from .forms import PostForm
 # Create your views here.
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-id')
     context = {
         'posts': posts,
     }

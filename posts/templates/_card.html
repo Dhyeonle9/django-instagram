@@ -5,9 +5,21 @@
         {{ post.user }}
         </a>
     </div>
-    <img src="{{ post.image.url }}">
+
     <div class="card-body">
-        <p class="card-text">{{ post.content }}</p>
+        <img src="{{ post.image.url }}" class="img-fluid">
+        <p class="mt-2">
+            <i class="bi bi-heart"></i>&nbsp;
+            <i class="bi bi-chat-right"></i>&nbsp;
+            <i class="bi bi-send"></i> 
+        </p>
+        <p class="card-text">
+            <a href="{% url 'accounts:profile' username=post.user %}" class="text-reset text-decoration-none">
+                <b>{{post.user}}</b>
+            </a>  
+            {{ post.content }}
+        </p> 
+
     </div>
     <div class="card-footer">
         <p class="card-text">{{ post.created_at }}</p>

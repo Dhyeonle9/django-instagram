@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 {% block body %}
+<div class="d-flex justify-content-center">
     <div class="row-col-1">
         {% for post in posts %}
             {% include '_card.html' %}
         {% endfor %}
     </div>
+</div>
 {% endblock %}

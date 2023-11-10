@@ -1,41 +1,53 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="row">
-    <div class="col-4">
-        <img src="{{ user_info.profile_image.url }}" alt="" class="rounded-circle img-fluid">
-    </div>
-    <div class="col-8">
-        <div class="row mt-3">
-            <h5>{{ user_info }}</h5>
+<div class="mt-5">
+    <div class="row">
+        <div class="col-4">
+            <img src="{{ user_info.profile_image.url }}" alt="" class="rounded-circle img-fluid">
         </div>
-        <div class="row row-col-3 my-1">
-            <div class="col-4">
-                <a href="" class="btn btn-light">follow</a>
+        <div class="col-8">
+            <div class="row mt-3">
+                <h5>{{ user_info }}</h5>
             </div>
-            <div class="col-5">
-                <a href="" class="btn btn-light">message</a>
+            <div class="row row-col-3 my-1">
+                {% if user != user_info %}
+                    <div class="col-5">
+                        <a href="{% url 'accounts:follows' username=user_info %}" class="btn btn-light">
+                            {% if user_info in user.followings.all %}
+                            <span>팔로잉</span>
+                            <i class="bi bi-check"></i>
+                            {% else %}
+                            <span>팔로우</span>
+                            {% endif %}
+                        </a>
+                    </div>
+                
+                    <div class="col-5">
+                        <a href="" class="btn btn-light">message</a>
+                    </div>
+                {% endif %}
+            </div>
+        
+            <div class="row my-2">
+                <!-- 장고문법에서 len()함수를 쓰는건 |로 가져옴 == user_info.post_set.all.count -->
+                <div class="col">게시물수 {{ user_info.post_set.all|length }}</div>
+                <div class="col">팔로워 {{ user_info.followers.all|length }}</div>
+                <div class="col">팔로우 {{ user_info.followings.all|length }}</div>
             </div>
         </div>
-
-        <div class="row my-1">
-            <!-- 장고문법에서 len()함수를 쓰는건 |로 가져옴 == user_info.post_set.all.count -->
-            <div class="col">게시물수 {{ user_info.post_set.all|length }}</div>
-            <div class="col">팔로워</div>
-            <div class="col">팔로우</div>
-        </div>
     </div>
-</div>
 
-<div class="mt-5 row row-cols-3">
-    {% for post in user_info.post_set.all %}
-    <div class="col px-0">
-        <div class="card">
-            <a href="{% url 'posts:detail' id=post.id %}">
-                <img src="{{ post.image.url }}" alt="" class="img-fluid m-0">
-            </a>
+    <div class="mt-5 row row-cols-3">
+        {% for post in user_info.post_set.all %}
+        <div class="col px-0">
+            <div class="card">
+                <a href="{% url 'posts:detail' id=post.id %}">
+                    <img src="{{ post.image.url }}" alt="" class="img-fluid m-0">
+                </a>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endblock %}

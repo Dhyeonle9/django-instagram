@@ -10,3 +10,6 @@ class User(AbstractUser):
     )
     # post_set (Post의 ForeignKey 역참조)
     # like_posts (Post의 ManyToMany 역참조)
+
+    followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
+    # followers 

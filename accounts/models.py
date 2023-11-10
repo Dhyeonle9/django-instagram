@@ -8,3 +8,5 @@ class User(AbstractUser):
         crop=['middle', 'center'],
         upload_to='profile',
     )
+    # post_set (Post의 ForeignKey 역참조)
+    # like_posts (Post의 ManyToMany 역참조)

@@ -12,3 +12,4 @@ class Post(models.Model):
         upload_to='image/%Y/%m',
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')

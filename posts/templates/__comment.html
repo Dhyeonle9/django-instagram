@@ -1,0 +1,16 @@
+{% load mathfilters %}
+
+{% if post.comment_set.count > 2 %}
+    <a href="" class="text-reset text-decoration-none">댓글 {{ post.comment_set.all.count|sub:2 }}개 더보기</a>
+{% endif %}
+
+{% for comment in post.comment_set.all %}
+    {% if comment.pk > post.comment_set.count|sub:1 %}
+        <p>
+            <a href="{% url 'accounts:profile' username=post.user %}" class="text-reset text-decoration-none">
+                <b>{{comment.user}}</b>
+            </a>
+            {{comment.comment}}
+        </p>
+    {% endif %}
+{% endfor %}

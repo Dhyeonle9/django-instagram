@@ -1,11 +1,44 @@
 {% extends 'base.html' %}
+{% load bootstrap5 %}
 
 {% block body %}
-<div class="d-flex justify-content-center">
-    <div class="row-col-1">
+<div class="row-col-1">
+    <div class="col justify-content-center">
         {% for post in posts %}
-            {% include '_card.html' %}
+        {% include '_card.html' %}
+        <hr>
         {% endfor %}
     </div>
 </div>
+<script>
+    let likeButtons = document.querySelectorAll("i.heart")
+    likeButtons.forEach((likeButton)=>{
+        likeButton.addEventListener("click", (event)=>{
+            let postId = event.target.dataset.postId
+
+            likeRequest(event.target, postId)
+        })
+    })
+    let likeRequest = async (button, postId) => {
+        let likeURL = `/posts/${postId}/likes-async/`
+        // console.log(likeURL)
+        let response = await fetch(likeURL)
+        let result = await response.json()
+        // console.log(result)
+        // 좋아요가 눌린 경우
+        if (result.status) {
+            button.classList.remove('bi-heart')
+            button.classList.add('bi-heart-fill')
+            button.style.color = 'red'
+            button.innerHTML = result.count
+        // 좋아요가 취소된경우
+        } else {
+            button.classList.remove('bi-heart-fill')
+            button.classList.add('bi-heart')
+            button.style.color = 'black'
+            button.innerHTML = result.count
+        }
+    }
+
+</script>
 {% endblock %}

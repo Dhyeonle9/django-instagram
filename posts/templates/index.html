@@ -19,12 +19,16 @@
             likeRequest(event.target, postId)
         })
     })
+
+
     let likeRequest = async (button, postId) => {
         let likeURL = `/posts/${postId}/likes-async/`
         // console.log(likeURL)
         let response = await fetch(likeURL)
         let result = await response.json()
         // console.log(result)
+        
+        
         // 좋아요가 눌린 경우
         if (result.status) {
             button.classList.remove('bi-heart')
@@ -39,6 +43,31 @@
             button.innerHTML = result.count
         }
     }
+
+    // const commentForms = document.querySelectorAll('.comment-form')
+    // commentForms.forEach(function(form) {
+    //     form.addEventListener('submit', function(event) {
+    //         event.preventDefault()
+            
+    //         const data = new FormData(event.target)
+
+    //         axios.post(event.target.action, data)
+    //             .then(function(response) {
+    //                 const comment = response.data
+    //                 const commentList = document.querySelector(
+    //                     `#comment-list-${comment.postId}`)
+    //                 const newComment = `<p>
+    //                                     <a href="{% url '/accounts/${post.user}/" class="text-reset text-decoration-none">
+    //                                 <b>${ comment.username }</b>
+    //                         </a>
+    //                         ${comment.comment}
+    //                     </p>`
+    //                 commentList.insertAdjacentHTML('beforeEnd', newComment)
+    //                 event.target.reset()
+    //             })
+    //     })
+    // })
+
 
 </script>
 {% endblock %}

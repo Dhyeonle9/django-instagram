@@ -8,9 +8,11 @@ from django.http import JsonResponse
 def index(request):
     posts = Post.objects.all().order_by('-id')
     form = CommentForm()
+
     context = {
         'posts': posts,
         'form': form,
+
     }
     return render(request,'index.html', context)
 
